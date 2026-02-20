@@ -42,10 +42,16 @@ local Section = Tab:CreateSection("Section Example")
 
 local Button = Tab:CreateButton({
    Name = "Button Example",
-   Callback = function() local player = game.Players.LocalPlayer
+   Callback = function()
+         local player = game.Players.LocalPlayer
         if player and player.Character then
-            -- Safely reload the character
-            player:LoadCharacter()
+            -- Safely reset character
+            local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.Health = 0 -- Triggers Roblox's default respawn
+            else
+                warn("No Humanoid found in character.")
+            end
         else
             warn("Player or character not found.")
    -- The function that takes place when the button is pressed
